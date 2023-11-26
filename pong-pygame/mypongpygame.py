@@ -1,6 +1,3 @@
-# Jucimar Jr
-# 2022
-
 import pygame
 
 pygame.init()
@@ -33,12 +30,14 @@ scoring_sound_effect = pygame.mixer.Sound('assets/258020__kodack__arcade-bleep-s
 # player 1
 player_1 = pygame.image.load("assets/player.png")
 player_1_y = 300
+player_1_x = 100
 player_1_move_up = False
 player_1_move_down = False
 
 # player 2 - robot
 player_2 = pygame.image.load("assets/player.png")
 player_2_y = 300
+player_2_x = 100
 
 # ball
 ball = pygame.image.load("assets/ball.png")
@@ -88,28 +87,39 @@ while game_loop:
             bounce_sound_effect.play()
 
         # ball collision with the player 1 's paddle
-        if ball_x < 100:
-            if player_1_y < ball_y + 25:
+        if ball_x == 100:  # bugfix paddle sides colliders
+            if player_1_y < ball_y + 20:
                 if player_1_y + 150 > ball_y:
                     ball_dx *= -1
                     bounce_sound_effect.play()
+        if ball_x + 20 >= 50 and ball_x <= 100:  # bugfix under and above paddle collider
+            if player_1_y + 150 == ball_y or player_1_y == ball_y + 20:
+                ball_dx *= -1
+                ball_dy *= -1
+                bounce_sound_effect.play()
 
         # ball collision with the player 2 's paddle
-        if ball_x > 1160:
-            if player_2_y < ball_y + 25:
+        if ball_x == 1180: # bugfix paddle sides collider
+            if player_2_y < ball_y + 20:
                 if player_2_y + 150 > ball_y:
                     ball_dx *= -1
                     bounce_sound_effect.play()
 
+        if ball_x + 20 >= 1130 and ball_x <= 1180:  # bugfix under and above paddle collider
+            if player_1_y + 150 == ball_y or player_1_y == ball_y + 20:
+                ball_dx *= -1
+                ball_dy *= -1
+                bounce_sound_effect.play()
+
         # scoring points
-        if ball_x < -50:
+        if ball_x < 0:
             ball_x = 640
             ball_y = 360
             ball_dy *= -1
             ball_dx *= -1
             score_2 += 1
             scoring_sound_effect.play()
-        elif ball_x > 1320:
+        elif ball_x > 1280:
             ball_x = 640
             ball_y = 360
             ball_dy *= -1
