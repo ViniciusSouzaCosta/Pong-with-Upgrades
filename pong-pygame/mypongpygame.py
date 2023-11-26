@@ -85,16 +85,16 @@ while game_loop:
         elif ball_y <= 0:
             ball_dy *= -1
             bounce_sound_effect.play()
-
+        # exponential speed increase after each paddle collision
         # ball collision with the player 1 's paddle
         if ball_x == 100:  # bugfix paddle sides colliders
             if player_1_y < ball_y + 20:
                 if player_1_y + 150 > ball_y:
-                    ball_dx *= -1
+                    ball_dx *= -2
                     bounce_sound_effect.play()
         if ball_x + 20 >= 50 and ball_x <= 100:  # bugfix under and above paddle collider
             if player_1_y + 150 == ball_y or player_1_y == ball_y + 20:
-                ball_dx *= -1
+                ball_dx *= -2
                 ball_dy *= -1
                 bounce_sound_effect.play()
 
@@ -105,41 +105,41 @@ while game_loop:
                     ball_dx *= -1
                     bounce_sound_effect.play()
 
-        if ball_x + 20 >= 1180 and ball_x <= 1130:  # bugfix under and above paddle collider
+        if ball_x + 20 >= 1130 and ball_x <= 1180:  # bugfix under and above paddle collider
             if player_1_y + 150 == ball_y or player_1_y == ball_y + 20:
                 ball_dx *= -1
                 ball_dy *= -1
                 bounce_sound_effect.play()
-
+        # ball speed halved after each score
         # scoring points
         if ball_x < 0:
             ball_x = 640
             ball_y = 360
             ball_dy *= -1
-            ball_dx *= -1
+            ball_dx *= -0.5
             score_2 += 1
             scoring_sound_effect.play()
         elif ball_x > 1280:
             ball_x = 640
             ball_y = 360
             ball_dy *= -1
-            ball_dx *= -1
+            ball_dx *= -0.5
             score_1 += 1
             scoring_sound_effect.play()
 
         # ball movement
         ball_x = ball_x + ball_dx
         ball_y = ball_y + ball_dy
-
+        # increased player 1 overall speed
         # player 1 up movement
         if player_1_move_up:
-            player_1_y -= 5
+            player_1_y -= 10
         else:
             player_1_y += 0
 
         # player 1 down movement
         if player_1_move_down:
-            player_1_y += 5
+            player_1_y += 10
         else:
             player_1_y += 0
 
