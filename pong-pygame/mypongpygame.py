@@ -105,7 +105,7 @@ while game_loop:
                     ball_dx *= -1
                     bounce_sound_effect.play()
 
-        if ball_x + 20 >= 1130 and ball_x <= 1180:  # bugfix under and above paddle collider
+        if ball_x + 20 >= 1180 and ball_x <= 1130:  # bugfix under and above paddle collider
             if player_1_y + 150 == ball_y or player_1_y == ball_y + 20:
                 ball_dx *= -1
                 ball_dy *= -1
