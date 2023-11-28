@@ -16,9 +16,11 @@ pygame.display.set_caption("MyPong - PyGame Edition - 2022-12-12")
 
 # score text
 score_font = pygame.font.Font('assets/PressStart2P-vaV7.ttf', 44)
-score_text = score_font.render('00 x 00', True, COLOR_WHITE, COLOR_BLACK)
+score_text = score_font.render('00   00', True, COLOR_WHITE, COLOR_BLACK)
 score_text_rect = score_text.get_rect()
 score_text_rect.center = (680, 50)
+
+# middle line
 
 # victory text
 victory_font = pygame.font.Font('assets/PressStart2P-vaV7.ttf', 100)
@@ -99,15 +101,15 @@ while game_loop:
         if ball_x < 0:
             ball_x = 640
             ball_y = 360
-            ball_dy *= -0.5
-            ball_dx *= -0.5
+            ball_dy = 5
+            ball_dx = 5
             score_2 += 1
             scoring_sound_effect.play()
         elif ball_x > 1280:
             ball_x = 640
             ball_y = 360
-            ball_dy *= -0.5
-            ball_dx *= -0.5
+            ball_dy = -5
+            ball_dx = -5
             score_1 += 1
             scoring_sound_effect.play()
 
@@ -143,13 +145,14 @@ while game_loop:
             player_2_y = 570
 
         # update score hud
-        score_text = score_font.render(str(score_1) + ' x ' + str(score_2), True, COLOR_WHITE, COLOR_BLACK)
+        score_text = score_font.render(str(score_1) + '   ' + str(score_2), True, COLOR_WHITE, COLOR_BLACK)
 
         # drawing objects
         screen.blit(ball, (ball_x, ball_y))
         screen.blit(player_1, (50, player_1_y))
         screen.blit(player_2, (1180, player_2_y))
         screen.blit(score_text, score_text_rect)
+        pygame.draw.aaline(screen, COLOR_WHITE, (1280/2,0), (1280 / 2,720))
     else:
         # drawing victory
         screen.fill(COLOR_BLACK)
