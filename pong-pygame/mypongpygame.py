@@ -12,7 +12,7 @@ SCORE_MAX = 4
 
 size = (1280, 720)
 screen = pygame.display.set_mode(size)
-pygame.display.set_caption("MyPong - PyGame Edition - 2022-12-12")
+pygame.display.set_caption("MyPong - PyGame Edition - 2023-2")
 
 # score text
 score_font = pygame.font.Font('assets/PressStart2P-vaV7.ttf', 44)
@@ -76,6 +76,10 @@ while game_loop:
         if ball_y > 700:
             ball_dy *= -1
             bounce_sound_effect.play()
+
+        if ball_y + 20 == 0:
+            check = random.randint(0, 1)
+
         elif ball_y <= 0:
             ball_dy *= -1
             bounce_sound_effect.play()
