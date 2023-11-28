@@ -28,6 +28,12 @@ victory_text = victory_font .render('VICTORY', True, COLOR_WHITE, COLOR_BLACK)
 victory_text_rect = score_text.get_rect()
 victory_text_rect.center = (450, 350)
 
+# defeat text
+defeat_font = pygame.font.Font('assets/PressStart2P-vaV7.ttf', 100)
+defeat_text = defeat_font .render('DEFEAT', True, COLOR_WHITE, COLOR_BLACK)
+defeat_text_rect = score_text.get_rect()
+defeat_text_rect.center = (450, 350)
+
 # sound effects
 bounce_sound_effect = pygame.mixer.Sound('assets/bounce.wav')
 scoring_sound_effect = pygame.mixer.Sound('assets/258020__kodack__arcade-bleep-sound.wav')
@@ -81,7 +87,7 @@ while game_loop:
         if ball_x + 20 >= 50 and ball_x <= 100:  # bugfix under and above paddle collider
             if player_1_y + 150 == ball_y or player_1_y == ball_y + 20:
                 ball_dx *= -2
-                ball_dy *= random.randint([-1, 1]) * abs(ball_dy)
+                ball_dy *= random.randint(-1, 1) * abs(ball_dy)
                 bounce_sound_effect.play()
 
         # ball collision with the player 2 's paddle
@@ -94,7 +100,7 @@ while game_loop:
         if ball_x + 20 >= 1180 and ball_x <= 1130:  # bugfix under and above paddle collider
             if player_1_y + 150 == ball_y or player_1_y == ball_y + 20:
                 ball_dx *= -1
-                ball_dy *= random.randint([-1, 1]) * abs(ball_dy)
+                ball_dy *= random.randint(-1, 1) * abs(ball_dy)
                 bounce_sound_effect.play()
         # ball speed halved after each score
         # scoring points
@@ -154,11 +160,16 @@ while game_loop:
         screen.blit(score_text, score_text_rect)
         pygame.draw.aaline(screen, COLOR_WHITE, (1280/2,0), (1280 / 2,720))
     else:
-        # drawing victory
-        screen.fill(COLOR_BLACK)
-        screen.blit(score_text, score_text_rect)
-        screen.blit(victory_text, victory_text_rect)
-
+        if score_1 == 2:
+            # drawing victory
+            screen.fill(COLOR_BLACK)
+            screen.blit(score_text, score_text_rect)
+            screen.blit(victory_text, victory_text_rect)
+        if score_2 == 2:
+            # drawing defeat
+            screen.fill(COLOR_BLACK)
+            screen.blit(score_text, score_text_rect)
+            screen.blit(defeat_text, defeat_text_rect)
     # update screen
     pygame.display.flip()
     game_clock.tick(60)
