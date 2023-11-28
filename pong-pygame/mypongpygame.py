@@ -1,4 +1,7 @@
 import pygame
+import random
+from ball import ball, ball_x, ball_y, ball_dx, ball_dy
+from padds import player_1, player_1_y, player_1_move_up, player_1_move_down, player_2, player_2_y
 
 pygame.init()
 
@@ -26,25 +29,6 @@ victory_text_rect.center = (450, 350)
 # sound effects
 bounce_sound_effect = pygame.mixer.Sound('assets/bounce.wav')
 scoring_sound_effect = pygame.mixer.Sound('assets/258020__kodack__arcade-bleep-sound.wav')
-
-# player 1
-player_1 = pygame.image.load("assets/player.png")
-player_1_y = 300
-player_1_x = 100
-player_1_move_up = False
-player_1_move_down = False
-
-# player 2 - robot
-player_2 = pygame.image.load("assets/player.png")
-player_2_y = 300
-player_2_x = 100
-
-# ball
-ball = pygame.image.load("assets/ball.png")
-ball_x = 640
-ball_y = 360
-ball_dx = 5
-ball_dy = 5
 
 # score
 score_1 = 0
@@ -95,7 +79,7 @@ while game_loop:
         if ball_x + 20 >= 50 and ball_x <= 100:  # bugfix under and above paddle collider
             if player_1_y + 150 == ball_y or player_1_y == ball_y + 20:
                 ball_dx *= -2
-                ball_dy *= -1
+                ball_dy *= random.randint([-1, 1]) * abs(ball_dy)
                 bounce_sound_effect.play()
 
         # ball collision with the player 2 's paddle
@@ -108,21 +92,21 @@ while game_loop:
         if ball_x + 20 >= 1180 and ball_x <= 1130:  # bugfix under and above paddle collider
             if player_1_y + 150 == ball_y or player_1_y == ball_y + 20:
                 ball_dx *= -1
-                ball_dy *= -1
+                ball_dy *= random.randint([-1, 1]) * abs(ball_dy)
                 bounce_sound_effect.play()
         # ball speed halved after each score
         # scoring points
         if ball_x < 0:
             ball_x = 640
             ball_y = 360
-            ball_dy *= -1
+            ball_dy *= -0.5
             ball_dx *= -0.5
             score_2 += 1
             scoring_sound_effect.play()
         elif ball_x > 1280:
             ball_x = 640
             ball_y = 360
-            ball_dy *= -1
+            ball_dy *= -0.5
             ball_dx *= -0.5
             score_1 += 1
             scoring_sound_effect.play()
