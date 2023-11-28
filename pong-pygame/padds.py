@@ -11,3 +11,4 @@ player_1_move_down = False
 player_2 = pygame.image.load("assets/player.png")
 player_2_y = 300
 player_2_x = 100
+player_2_dy = 5
